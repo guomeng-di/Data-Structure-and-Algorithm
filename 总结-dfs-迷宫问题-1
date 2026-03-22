@@ -1,0 +1,62 @@
+对于迷宫问题,有以下总结
+
+1.对于求最长路径的长度问题,一般要求可以走已经走过的路,但是不计数
+举例: 1->3->2->3->4->7  cnt=5 
+可能因为,2周围dfs不成功,所以只能回到3,另选出处
+此时,我们不会对2重复计数,因为st数组显示2走过
+那么,我们可以将问题转化为:
+只要周围安全且没有走过,就计数(求最长路径,可以会拐)
+因此,不用在dfs后初始化st数组(已经计数,防止重复计数)
+我们写下核心代码:
+void dfs(int x,int y){   当前坐标(x,y)
+   for(int i=0;i<4;i++){
+      int nx=x+dx[i];
+      int ny=y+dy[i];
+      nx,ny为上下左右移动后的坐标
+      if(nx<1||nx>N||ny<1||ny>M) continue;  出界
+      if(st[nx][ny]==1) continue; 走过就不用走了,防止死循环
+      if(g[nx][ny]=='#') continue; 不符合要求,不走
+      st[nx][ny]=1;  标记
+      cnt++;
+      dfs(nx,ny); 继续四周寻找
+      //注意! 此处不用初始化
+   }
+}
+相关例题见 洛谷:P1683 入门
+
+2.对于求走得通的方案数的问题,一般给出起点,终点,障碍点,
+且每个点只走一次,求方案数
+举例: .表示可走,*表示不可走(障碍)
+起 .
+*  终
+则 ans=1
+这个问题与上个问题有两个不同点:
+1.每种方案,每个点只能走一次-->因此,dfs之后要初始化
+2.dfs到每个点时,我们都要判读该点是不是终点/障碍点-->因此,写is_obstacle函数判断障碍点
+我们写下核心代码:
+bool is_obstacle(int x,int y){
+    for(int i=1;i<=T;i++){ T为障碍数
+       if(x==zhangai_x[i]&&y==zhangai_y[i]) return 1; 是障碍
+    }
+    return 0;
+}
+
+void dfs(int x,int y){
+    if(x==fx&&y==fy){  找到终点
+        ans++;
+        return ;
+    }  
+
+      int nx=x+dx[i];
+      int ny=y+dy[i];
+      nx,ny为上下左右移动后的坐标
+      if(nx<1||nx>N||ny<1||ny>M) continue;  出界
+      if(st[nx][ny]==1) continue; 走过就不用走了,防止死循环
+      if(is_obstacle(nx,ny)) continue; 障碍点,不走
+      st[nx][ny]=1;  标记
+      dfs(nx,ny);
+      st[nx][ny]=0;
+      //注意! 此处用初始化
+}
+相关例题见 洛谷:P1605 迷宫
+
