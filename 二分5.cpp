@@ -1,25 +1,38 @@
-//49406. 妮妮的月饼工厂
+//49099. 小蓝吃糖果(线性筛 贪心 排序 前缀和 二分)
 #include <bits/stdc++.h>
 using namespace std;
-int N,K;
-const int n=1e5+3;
-int arr[n];
-int check(int x){
-    int sum=0;
-    for(int i=1;i<=N;i++)
-    sum+=arr[i]/x;
-    
-    return sum;
-}
+typedef long long ll;
+int n,q;
+vector<int> arr;
+const int N=1e5+3;
+ll sum[N];
 int main() {
-    cin>>N>>K;
-    for(int i=1;i<=N;i++) scanf("%d",&arr[i]);
-    int l=1,r=1e9,ans=-1;
-    while(l<r){
-        int mid=l+(r-l+1)/2;
-        if(check(mid)>=K) {l=mid;ans=mid;}
-        else r=mid-1;
+    cin>>n>>q;
+    int aa;
+    for(int i=0;i<n;i++){
+        scanf("%d",&aa);
+        arr.push_back(aa);
     }
-    cout<<ans;
+    sort(arr.begin(),arr.end());
+    reverse(arr.begin(),arr.end());
+    sum[0]=arr[0];
+    for(int i=1;i<n;i++){
+        sum[i]=sum[i-1]+arr[i];
+    }
+    while(q--){
+        ll x; scanf("%lld",&x);
+        int l=0,r=n-1;
+        int ans=-2;
+        while(l<=r){
+        int mid=l+(r-l)/2;
+        if(sum[mid]==x) {ans=mid;break;}
+        else if(sum[mid]>x){ans=mid;r=mid-1;}//向左
+        else l=mid+1;//向右
+    }
+         cout<<(ans+1)<<endl;
+    }
     return 0;
 }
+// 4 3 2 1
+// 0 1 2 3
+// 4 7 9 10
