@@ -1,0 +1,67 @@
+STL:
+1 向量vector
+定义: vector<vector<int>> vec(5,vector<int>(6,10)); //5行6列,初始值10
+     vector<vector<vector<int>>> a(2,vector<vector<int>>(5,vector<int>(6,9))); //a[2][5][6]={9};
+成员函数:
+ a.push_back(1);(尾接)
+ a.pop_back(1);(尾删) 
+ a.size();
+ a.clear();//清空
+ a.empty();//1==空 0==非空
+ a.resize(x);//x为新的长度 x<x旧->尾删  x==x旧->不变  x>x旧->a.resuze(6,8);->新元素赋值8
+用法: 1<m,n<=10^6
+用数组可能浪费空间
+cin>>n>>m;
+vector<vector<int>> a(n,vector<int>(m));
+
+
+2 栈stack
+定义:stack<double>stc;
+成员函数:
+a.push(); a.pop();
+a.top();(查看栈顶)
+a.empty();
+注意:没有clear(),只能删除栈顶;
+不能操作内部元素(比如: cout<<a[i];)
+
+
+3 队列queue
+queue<int> que;
+que.push(); que.pop();//先进先出 
+que.front();取对首 que.back();
+que.size();
+que.empty();
+
+
+4 优先队列priority_queue (堆)
+自动实现排序
+if:   priority_queue<int> pque;//只传一个参数,默认从小到大排序
+if:   priority_queue<int/long...,vector<int/long...>,greater<int/long...>> qpue;//从大到小
+pque.pop(); pque.top(); pque.push();
+注意:仅可访问堆顶元素
+
+
+5 集合set
+一个元素在集合中仅能出现一次 ->(互异性)   <- multiset可以存储一个元素多次
+set:自动排序,从小到大  unordered_set:无序
+set<int>st;
+st.insert(x);//插入x
+st.erase(x);//删除x
+st.find(x);//查找x -> if(st.find(2)==st.end())->没找到
+st.count(x);//查找有几个x存在  ->  可以代替find -> 在set中,返回值只有0/1(互异性),在multiset中,返回具体个数
+st.clear();
+st.empty();
+遍历:
+注意:不存在下标一说,只能通过迭代器遍历
+for(set<int>::iterator it=set.begin();it!=set.end();int++) cout<<*it<<endl;
+
+for(auto &it:st) cout<<it<<endl;
+
+用途:
+实现元素的去重->将数组元素依次放入set,自动去重
+维护顺序->排序
+判断元素是否出现过->元素大小[-10^18,10^18],元素个数10^6,通过set可以实现(元素很大,但个数很少)->st.count()
+注意:
+不存在下标一说,只能通过迭代器遍历
+元素是只读的,不可修改;如果要改,先erase,再insert
+不能用迭代器计算下标 eg: auto it=st.find(2);(对) int idx=it-st.begin();(错)
