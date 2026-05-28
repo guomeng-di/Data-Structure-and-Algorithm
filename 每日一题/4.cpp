@@ -1,0 +1,14 @@
+//2540. 最小公共值
+class Solution {
+public:
+    int getCommon(vector<int>& nums1, vector<int>& nums2) {
+
+        set<int> st;
+        for(int i=0;i<nums1.size();i++) st.insert (nums1[i]);
+
+        for(int i=0;i<nums2.size();i++){
+            if(st.find(nums2[i])!=st.end()) return nums2[i];
+        }
+        return -1;
+    } 
+};
