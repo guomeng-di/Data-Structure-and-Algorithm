@@ -133,3 +133,33 @@ for(auto &it:st) cout<<it<<endl;
 元素是只读的,不可修改;如果要改,先erase,再insert
 
 不能用迭代器计算下标 eg: auto it=st.find(2);(对) int idx=it-st.begin();(错)
+
+# 6 map
+
+## 定义:
+
+map<键类型,值类型> mp;
+
+## 用法:
+
+### 1插入元素
+
+ mp[1]="张三";
+
+### 2访问
+
+mp[1]  //直接访问
+
+### 3遍历
+
+for(int i=mp.begin();i!=mp.end();i++)
+
+### 4查找
+
+if(mp.find(键值)!=mp.end() )
+
+### 5删除
+
+mp.erase(键值);
+
+
