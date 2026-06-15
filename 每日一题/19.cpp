@@ -20,6 +20,10 @@ public:
             n++;
             pre=pre->next;
         }
+        if(n==1){
+            head=head->next;
+            return head;
+        }
         pre=head;
         for(int i=0;i<n/2;i++){
             ans=pre;
