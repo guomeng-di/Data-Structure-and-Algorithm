@@ -1,0 +1,41 @@
+//3517. 最小回文排列 I
+//暴力:
+class Solution {
+public:
+    string smallestPalindrome(string s) {
+        string ans;
+        int len=s.size();
+        unordered_map<char,int> mp;
+        if(len<=2) return s;
+        sort(s.begin(),s.end());
+        if(len%2==0){
+            for(int i=0;i<len;i++){
+                mp[s[i]]++;
+            }
+            for(int i=0;i<len;){
+                int cnt=mp[s[i]]/2;
+                while(cnt--){
+                    ans+=s[i];
+                }i+=mp[s[i]];
+            }
+            string q1=ans;
+            reverse(ans.begin(),ans.end());
+            return q1+ans;
+        }
+        for(int i=0;i<len;i++){
+                mp[s[i]]++;
+            }//aabbb a:2 b:3
+            char b;
+            for(int i=0;i<len;){
+                if(mp[s[i]]%2) b=s[i];
+                int cnt=mp[s[i]]/2;
+                while(cnt--){
+                    ans+=s[i];
+                }i+=mp[s[i]];
+            }//ans: ab
+            string q1=ans;
+            reverse(ans.begin(),ans.end());
+            return q1+string(1,b)+ans;
+
+    }
+};
